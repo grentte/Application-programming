@@ -1,5 +1,8 @@
+from Product import Product
+
+
 class Rating:
-    def __init__(self, product):
+    def __init__(self, product: Product):
         self.product = product
         self.total_reviews = 0
         self.average_rating = 0.0
@@ -13,12 +16,6 @@ class Rating:
         return f"New average rating for {self.product.name}: {self.average_rating:.1f}"
 
     def reset_rating(self):
-        """Reset the rating statistics for the product."""
         self.total_reviews = 0
         self.average_rating = 0.0
         return f"Rating for {self.product.name} has been reset."
-
-
-class RatingManager:
-    pass
-

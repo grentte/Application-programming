@@ -1,5 +1,8 @@
+from Address import Address
+
+
 class User:
-    def __init__(self, user_id, email, name = None, phone = None, address = None):
+    def __init__(self, user_id: int, email: str, name: str = None, phone: str = None, address: Address = None):
         self.user_id = user_id
         self.email = email
         self.name = name
@@ -23,7 +26,7 @@ class UserManager:
         self.users_list = []
         self.current_user_id = 1
 
-    def create(self, email, name, phone, address):
+    def create(self, email: str, name: str, phone: str, address: Address):
         user = User(self.current_user_id, email, name, phone, address)
         self.users_list.append(user)
         self.current_user_id += 1
@@ -32,14 +35,14 @@ class UserManager:
     def read_all(self):
         return self.users_list
 
-    def read_by_id(self, user_id):
+    def read_by_id(self, user_id: int):
         for user in self.users_list:
             if user_id == user_id:
                 return user
 
         return None
 
-    def update(self, user_id, email = None, name = None, phone = None, address = None):
+    def update(self, user_id: int, email: str = None, name: str = None, phone: str = None, address: Address = None):
         user = self.read_by_id(user_id)
         if user:
             if email is not None:
@@ -52,7 +55,7 @@ class UserManager:
                 user.address = address
             return user
 
-    def delete(self, user_id):
+    def delete(self, user_id: int):
         user = self.read_by_id(user_id)
         if user:
             self.users_list.remove(user)
