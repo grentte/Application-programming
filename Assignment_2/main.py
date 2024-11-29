@@ -1,4 +1,5 @@
 from reExpression import is_valid_utc, find_utc_times_in_text
+from WebPageSearch import find_utc_times_on_webpage
 
 
 if __name__ == "__main__":
@@ -9,3 +10,4 @@ if __name__ == "__main__":
     # Текст с несколькими строками UTC
     test_text = "Here are some UTC times: 2024-12-31T22:34:59Z, 1900-01-01T00:00:00Z, and 1988-12-03T22:05:59Z."
     print("Found UTC times:", find_utc_times_in_text(test_text))
+    find_utc_times_on_webpage("https://www.utctime.net")
