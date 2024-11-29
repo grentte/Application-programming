@@ -1,5 +1,5 @@
 class Address:
-    def __init__(self, address_id: int, user_id: int, city: str, street: str, house: int, apartment: int):
+    def __init__(self, address_id: int, user_id: int, city: str, street: str, house: int, apartment: int) -> object:
         self.address_id = address_id
         self.user_id = user_id
         self.city = city

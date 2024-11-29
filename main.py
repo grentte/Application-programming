@@ -1,38 +1,35 @@
-from UserXMLHandler import UserXMLHandler
+from User import UserManager, User, UserNotFoundError
+from UserJSONHandler import UserJSONHandler, UserExistsError
 from Address import Address
+import os
 
 
 def main():
-    # Указываем путь к файлу XML, где будут храниться данные о пользователях
-    file_path = 'users.xml'
+    # Файлы для хранения данных о пользователях
+    json_file = "users.json"
 
-    # Создаём объект UserXMLHandler
-    user_handler = UserXMLHandler(file_path)
+    # Убедимся, что файл существует (или создадим пустой файл)
+    if not os.path.exists(json_file):
+        with open(json_file, "w") as file:
+            file.write("{\"users\": []}")
 
-    # Создаём адреса
-    address1 = Address(address_id=1, user_id=1, city="New York", street="123 Main St", house=10, apartment=101)
-    user1 = user_handler.create(email="john.doe@example.com", name="John Doe", phone="123-456-7890", address=address1)
-    print(f"Created User: {user1}")
+    # Инициализация менеджеров
+    user_manager = UserManager()
+    json_handler = UserJSONHandler(json_file)
 
-    address2 = Address(address_id=2, user_id=2, city="Los Angeles", street="456 Elm St", house=20, apartment=202)
-    user2 = user_handler.create(email="jane.smith@example.com", name="Jane Smith", phone="987-654-3210",
-                                address=address2)
-    print(f"Created User: {user2}")
+    # Создание адреса и пользователя
+    print("\n--- Creating user in memory ---")
+    address1 = Address(1, 1, "Moscow", "Arbat", 15, 200)
+    user1 = user_manager.create("user1@example.com", "Alice", "+1234567890", address1)
+    print(f"Created user: {user1}")
 
-    # Обновляем информацию о пользователе
-    updated_user = user_handler.update(user1.user_id, name="Johnathan Doe", phone="111-222-3333")
-    print(f"Updated User: {updated_user}")
+    # Сохранение пользователя в JSON
+    print("\n--- UserJSONHandler: Saving user to JSON ---")
+    try:
+        json_handler.create(user1)
+        print(f"User {user1.name} saved to JSON.")
+    except UserExistsError as e:
+        print(e)
 
-    # Удаляем пользователя
-    deleted_user_message = user_handler.delete(user2.user_id)
-    print(deleted_user_message)
-
-    # Считываем всех пользователей из файла
-    users = user_handler.list_all()
-    print("\nAll Users in the system:")
-    for user in users:
-        print(user)
-
-
-if __name__ == '__main__':
+if __name__ == "__main__":
     main()

@@ -1,0 +1,16 @@
+{
+    "users": [
+        {
+            "user_id": 1,
+            "email": "user1@example.com",
+            "name": "Alice",
+            "phone": "+1234567890",
+            "address": {
+                "city": "Moscow",
+                "street": "Arbat",
+                "house": 15,
+                "apartment": 200
+            }
+        }
+    ]
+}
