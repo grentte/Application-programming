@@ -28,7 +28,7 @@ class Cart:
         for product, qty in self.products.items():
             product.stock += qty
         self.products.clear()
-        return "Cart cleared successfully!"
+        return "Cart cleared"
 
     def __repr__(self):
         return f"Cart(cart_id={self.cart_id}, user_id={self.user_id}, products={self.view_cart()})"
