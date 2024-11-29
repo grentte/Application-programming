@@ -1,11 +1,13 @@
 import re
 
-utc_regex = r'(?:\d{1,3}[0-9]{3}|20[0-9]{2})-(?:0[1-9]|1[0-2])-(?:0[1-9]|[12]\d|3[01])T(?:[01]\d|2[0-3]):(?:[0-5]\d):(?:[0-5]\d)Z'
+utc_regex = (r'(?:\d{1,3}[0-9]{3}|20[0-9]{2})' # Год
+             r'-(?:0[1-9]|1[0-2])' # Месяц
+             r'-(?:0[1-9]|[12]\d|3[01])T' # День
+             r'(?:[01]\d|2[0-3])' # Час
+             r':(?:[0-5]\d)' # Минута
+             r':(?:[0-5]\d)Z') # Секунда
 
 def is_valid_utc(utc_time):
-    """
-    Проверяет, соответствует ли строка формату UTC (например, 2024-11-29T12:34:56Z).
-    """
     try:
         if not isinstance(utc_time, str):
             raise TypeError("The provided UTC time must be a string.")
@@ -15,9 +17,6 @@ def is_valid_utc(utc_time):
         return False
 
 def find_utc_times_in_text(text):
-    """
-    Ищет все строки формата UTC в тексте.
-    """
     try:
         if not isinstance(text, str):
             raise TypeError("The provided text must be a string.")
