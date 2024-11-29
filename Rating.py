@@ -2,7 +2,6 @@ from Product import Product
 
 
 class InvalidRatingError(Exception):
-    """Исключение для недопустимого значения рейтинга."""
     def __init__(self, rating_value):
         super().__init__(f"Invalid rating value: {rating_value}. Rating must be between 1 and 5.")
 

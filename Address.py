@@ -67,11 +67,9 @@ class AddressManager:
 
 
 class AddressError(Exception):
-    """Общее исключение для ошибок, связанных с адресами."""
     pass
 
 
 class AddressNotFoundError(AddressError):
-    """Исключение для случаев, когда адрес не найден."""
     def __init__(self, address_id):
         super().__init__(f"Address with ID {address_id} not found.")
