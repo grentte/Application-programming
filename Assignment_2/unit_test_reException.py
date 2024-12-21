@@ -56,7 +56,7 @@ class TestWebpageUTCSearch(unittest.TestCase):
         mock_get.return_value.text = "UTC times: 2024-11-29T12:34:56Z, 2023-08-15T09:45:00Z"
 
         with patch("builtins.print") as mock_print:
-            find_utc_times_on_webpage("https://www.example.com")
+            find_utc_times_on_webpage("https://www.utctime.net")
             mock_print.assert_called_with("Found UTC times on the page:",
                                           ["2024-11-29T12:34:56Z", "2023-08-15T09:45:00Z"])
 
@@ -65,7 +65,7 @@ class TestWebpageUTCSearch(unittest.TestCase):
         mock_get.side_effect = requests.RequestException("Network error")
 
         with patch("builtins.print") as mock_print:
-            find_utc_times_on_webpage("https://www.example.com")
+            find_utc_times_on_webpage("https://www.stankin.ru")
             mock_print.assert_called_with("An unexpected error occurred: Network error")
 
 

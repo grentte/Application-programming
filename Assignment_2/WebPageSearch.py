@@ -35,4 +35,4 @@ def find_utc_times_on_webpage(url):
 if __name__ == "__main__":
     url = input("Enter the URL of the web page: ")
     find_utc_times_on_webpage(url) # https://www.utctime.net -> для положительного результата
-                                   # https://edu.stankin.ru/mod/assign/view.php?id=412360 -> для отрицательного
+                                   # https://edu.stankin.ru -> для отрицательного
