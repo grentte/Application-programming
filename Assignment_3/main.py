@@ -1,9 +1,19 @@
 import random
+import json
 
-def choose_word():
-    # Список слов из пяти букв
-    words = ["столб", "мячик", "книга", "носки", "палка"]
-    return random.choice(words).lower()
+def load_words():
+    # Загрузка списка слов из файла word_dictionary.json
+    try:
+        with open("word_dictionary.json", "r", encoding="utf-8") as file:
+            words = json.load(file)
+            return [word.lower() for word in words if len(word) == 5]
+    except FileNotFoundError:
+        print("Файл word_dictionary.json не найден. Убедитесь, что он находится в той же директории, что и main.py.")
+        return []
+
+def choose_word(word_list):
+    # Случайный выбор слова из списка
+    return random.choice(word_list)
 
 def get_feedback(secret_word, guess):
     feedback = []
@@ -23,7 +33,12 @@ def game():
     print("? : Буква есть, но на другой позиции.")
     print("- : Буквы нет в слове.")
 
-    secret_word = choose_word()
+    word_list = load_words()
+    if not word_list:
+        print("Невозможно начать игру: список слов пуст или файл отсутствует.")
+        return
+
+    secret_word = choose_word(word_list)
     attempts = 6
 
     while attempts > 0:
@@ -33,12 +48,16 @@ def game():
             print("Пожалуйста, введите слово из 5 букв.")
             continue
 
+        if guess not in word_list:
+            print("Это слово отсутствует в словаре. Попробуйте другое слово.")
+            continue
+
         if guess == secret_word:
             print("Поздравляем! Вы угадали слово!")
             break
 
         feedback = get_feedback(secret_word, guess)
-        print(f"{feedback}")
+        print(f"Подсказка: {feedback}")
         attempts -= 1
 
     if attempts == 0:
