@@ -1,12 +1,11 @@
-# добавить меню: правила, новая игра
 import sys
 import random
 import json
 from PyQt6.QtWidgets import (
-    QApplication, QMainWindow, QLabel, QLineEdit, QPushButton, QVBoxLayout, QWidget, QMessageBox, QScrollArea
+    QApplication, QMainWindow, QLabel, QLineEdit, QPushButton, QVBoxLayout, QWidget, QMessageBox, QScrollArea, QMenuBar
 )
 from PyQt6.QtCore import Qt
-from PyQt6.QtGui import QFont
+from PyQt6.QtGui import QFont, QAction
 
 
 class WordleGame(QMainWindow):
@@ -52,6 +51,8 @@ class WordleGame(QMainWindow):
         return "<br>".join(self.current_feedback)
 
     def init_ui(self):
+        self.init_menu()
+
         layout = QVBoxLayout()
 
         self.info_label = QLabel("Угадайте слово из 5 букв за 6 попыток.")
@@ -80,6 +81,29 @@ class WordleGame(QMainWindow):
         scroll_area.setWidget(container)
 
         self.setCentralWidget(scroll_area)
+
+    def init_menu(self):
+        menu_bar = QMenuBar(self)
+        self.setMenuBar(menu_bar)
+
+        game_menu = menu_bar.addMenu("Меню")
+
+        reset_action = QAction("Начать заново", self)
+        reset_action.triggered.connect(self.reset_game)
+        game_menu.addAction(reset_action)
+
+        rules_action = QAction("Правила", self)
+        rules_action.triggered.connect(self.show_rules)
+        game_menu.addAction(rules_action)
+
+    def show_rules(self):
+        rules = (
+            "Принцип игры:\n"
+            "1. Угадайте слово из 5 букв за 6 попыток.\n"
+            "2. После каждой попытки буквы окрашиваются: зеленый - буква есть в слове и стоит на правильной позиции,\n"
+            "жёлтый - буква есть в слове, но стоит на неправильной позиции, красный - буквы нет в слове.\n"
+        )
+        QMessageBox.information(self, "Правила игры", rules)
 
     def check_word(self):
         guess = self.input_field.text().lower()
@@ -136,6 +160,6 @@ if __name__ == "__main__":
     app = QApplication(sys.argv)
 
     game = WordleGame()
-    game.showFullScreen()  # Открытие в полноэкранном режиме
+    game.show()
 
     sys.exit(app.exec())
